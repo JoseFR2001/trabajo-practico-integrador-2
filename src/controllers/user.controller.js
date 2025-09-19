@@ -10,7 +10,7 @@ export const createUser = async (req, res) => {
 };
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await UserModel.find();
+    const users = await UserModel.find({ deleted_at: null });
     return res.status(200).json({ ok: true, data: users });
   } catch (error) {
     return res.status(500).json({ ok: false, msg: "Internal server error" });
@@ -19,7 +19,7 @@ export const getAllUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await UserModel.findById(id);
+    const user = await UserModel.findById(id, { deleted_at: null });
     return res.status(200).json({ ok: true, data: user });
   } catch (error) {
     return res.status(500).json({ ok: false, msg: "Internal server error" });
