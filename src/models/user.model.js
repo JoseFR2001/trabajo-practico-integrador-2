@@ -35,9 +35,23 @@ const UserSchema = new Schema(
     deleted_at: { type: Date, default: null },
   },
   {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
     timestamps: true,
     versionKey: false,
   }
 );
+
+UserSchema.virtual("articles", {
+  ref: "Article",
+  localField: "_id",
+  foreignField: "author",
+});
+
+UserSchema.virtual("comments", {
+  ref: "Comment",
+  localField: "_id",
+  foreignField: "author",
+});
 
 export const UserModel = model("User", UserSchema);
