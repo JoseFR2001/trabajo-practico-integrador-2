@@ -1,12 +1,10 @@
-import { matchedData } from "express-validator";
 import { UserModel } from "../models/user.model.js";
 import { comparePassword, hashPassword } from "../helpers/bcrypt.helper.js";
 import { generateToken } from "../helpers/jwt.helpers.js";
 
 export const register = async (req, res) => {
+  const data = req.data;
   try {
-    const data = matchedData(req, { locations: ["body"] });
-
     const passwordHash = await hashPassword(data.password);
 
     const user = await UserModel.create({
@@ -74,9 +72,9 @@ export const getProfile = async (req, res) => {
 };
 
 export const updateProfile = async (req, res) => {
+  data = req.data;
   try {
-    const data = matchedData(req, { locations: ["body"] });
-    const user = await UserModel.findByIdAndUpdate(
+    const profileUpdate = await UserModel.findByIdAndUpdate(
       req.user._id,
       {
         profile: {
@@ -89,7 +87,7 @@ export const updateProfile = async (req, res) => {
       },
       { new: true }
     ).select("profile -_id");
-    return res.status(200).json({ ok: true, data: user });
+    return res.status(200).json({ ok: true, data: profileUpdate });
   } catch (error) {
     return res.status(500).json({ ok: false, msg: "Internal server error" });
   }
