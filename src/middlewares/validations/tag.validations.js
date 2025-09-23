@@ -2,7 +2,7 @@ import { body } from "express-validator";
 import { TagModel } from "../../models/tag.model.js";
 
 export const idTagValidations = [
-  param("_id")
+  param("id")
     .isMongoId()
     .withMessage("El ID debe ser un ID válido")
     .custom(async (id) => {

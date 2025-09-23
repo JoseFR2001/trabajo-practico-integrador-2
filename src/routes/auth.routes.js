@@ -12,6 +12,7 @@ import {
 } from "../middlewares/validations/auth.validation.js";
 import { applyValidation } from "../middlewares/validator.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { matchedDataMiddleware } from "../middlewares/matched_data.middleware.js";
 
 const routerAuth = Router();
 
@@ -19,6 +20,7 @@ routerAuth.post(
   "/auth/register",
   registerCreateValidations,
   applyValidation,
+  matchedDataMiddleware,
   register
 );
 routerAuth.post("/auth/login", login);
@@ -30,6 +32,7 @@ routerAuth.put(
   authMiddleware,
   profileUpdateValidations,
   applyValidation,
+  matchedDataMiddleware,
   updateProfile
 );
 

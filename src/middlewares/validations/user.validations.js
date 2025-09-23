@@ -5,8 +5,8 @@ export const idUserValidations = [
   param("id")
     .isMongoId()
     .withMessage("El ID debe ser un ID válido")
-    .custom(async (_id) => {
-      const user = await UserModel.findOne({ _id, deleted_at: null });
+    .custom(async (id) => {
+      const user = await UserModel.findOne({ id, deleted_at: null });
       if (!user) {
         throw new Error("El usuario no existe");
       }

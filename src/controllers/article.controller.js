@@ -1,8 +1,17 @@
 import { ArticleModel } from "../models/article.model.js";
 
 export const createArticle = async (req, res) => {
+  const data = req.data;
+  const user = req.user;
   try {
-    const article = await ArticleModel.create(req.body);
+    const article = await ArticleModel.create({
+      title: data.title,
+      content: data.content,
+      excerpt: data.excerpt,
+      status: data.status,
+      author: user._id,
+      tags: data.tags,
+    });
     return res.status(201).json({ ok: true, data: article });
   } catch (error) {
     return res.status(500).json({ ok: false, msg: "Internal server error" });
