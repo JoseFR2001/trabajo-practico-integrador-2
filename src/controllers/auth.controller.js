@@ -14,6 +14,7 @@ export const register = async (req, res) => {
       role: data.role,
       profile: {
         first_name: data.profile.first_name,
+
         last_name: data.profile.last_name,
         biography: data.profile.biography,
         avatar_url: data.profile.avatar_url,

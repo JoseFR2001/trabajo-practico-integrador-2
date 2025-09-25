@@ -49,3 +49,38 @@ export const deletedComment = async (req, res) => {
     return res.status(500).json({ ok: false, msg: "Internal server error" });
   }
 };
+
+export const getCommentArticle = async (req, res) => {
+  const { articleId } = req.params;
+  try {
+    const commentArticle = await CommentModel.find({
+      article: articleId,
+    }).populate("author");
+    return res.status(200).json({
+      data: commentArticle,
+      ok: true,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      msg: "Error interno del servidor",
+    });
+  }
+};
+
+export const getComentLoged = async (req, res) => {
+  const { id } = req.user;
+  try {
+    const userComments = await CommentModel.find({ author: id });
+    return res.status(200).json({
+      data: userComments,
+      ok: true,
+      msg: "operacion exitosa",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      ok: false,
+      msg: "Error interno del servidor",
+    });
+  }
+};
