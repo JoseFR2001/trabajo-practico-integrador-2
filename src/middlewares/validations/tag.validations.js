@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { TagModel } from "../../models/tag.model.js";
 
 export const idTagValidations = [
